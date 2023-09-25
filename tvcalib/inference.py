@@ -1,4 +1,4 @@
-#%%
+# %%
 import random
 from pathlib import Path
 from typing import Union
@@ -86,7 +86,8 @@ class InferenceSegmentationModel:
         self.model = deeplabv3_resnet101(
             num_classes=len(SoccerPitch.lines_classes) + 1, aux_loss=True
         )
-        self.model.load_state_dict(torch.load(checkpoint)["model"], strict=False)
+        self.model.load_state_dict(torch.load(checkpoint)[
+                                   "model"], strict=False)
         self.model.to(self.device)
         self.model.eval()
 
@@ -107,7 +108,8 @@ class InferenceDatasetSegmentation(torch.utils.data.Dataset):
             [
                 T.Resize(256),
                 T.ToTensor(),
-                T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                T.Normalize(mean=[0.485, 0.456, 0.406],
+                            std=[0.229, 0.224, 0.225]),
             ]
         )
         self.width = image_width
@@ -115,16 +117,18 @@ class InferenceDatasetSegmentation(torch.utils.data.Dataset):
         self.image_files = [
             f for f in Path(images_path).glob("**/*") if f.suffix in allowed_image_ext
         ]
+        ...
 
     def __getitem__(self, idx):
         image = Image.open(self.image_files[idx]).convert("RGB")
-        image_raw_resized = T.functional.to_tensor(image.copy().resize((self.width, self.height)))
+        image_raw_resized = T.functional.to_tensor(
+            image.copy().resize((self.width, self.height)))
         image = self.tfms(image)
 
         return {
             "image_raw": image_raw_resized,
             "image": image,
-            "image_id": self.image_files[idx].name,
+            "image_id": str(Path(*self.image_files[idx].parts[5:]))
         }
 
     def __len__(self):
@@ -192,19 +196,24 @@ class InferenceDatasetCalibration(torch.utils.data.Dataset):
                 pixel_stacked[label] = torch.stack([xx, yy], dim=-1)  # (?, 2)
                 # scale pixel annotations from [0, 1] range to source image resolution
                 # as this ranges from [1, {image_height, image_width}] shift pixel one left
-                pixel_stacked[label][:, 0] = pixel_stacked[label][:, 0] * (image_width_source - 1)
-                pixel_stacked[label][:, 1] = pixel_stacked[label][:, 1] * (image_height_source - 1)
+                pixel_stacked[label][:, 0] = pixel_stacked[label][:,
+                                                                  0] * (image_width_source - 1)
+                pixel_stacked[label][:, 1] = pixel_stacked[label][:,
+                                                                  1] * (image_height_source - 1)
 
         for segment_type, num_segments, segment_names in [
-            ("lines", model3d.line_segments.shape[1], model3d.line_segments_names),
-            ("circles", model3d.circle_segments.shape[1], model3d.circle_segments_names),
+            ("lines",
+             model3d.line_segments.shape[1], model3d.line_segments_names),
+            ("circles",
+             model3d.circle_segments.shape[1], model3d.circle_segments_names),
         ]:
 
             num_points_selection = num_points_on_line_segments
             if segment_type == "circles":
                 num_points_selection = num_points_on_circle_segments
             px_projected_selection = (
-                torch.zeros((num_segments, num_points_selection, 2)) + pad_pixel_position_xy
+                torch.zeros((num_segments, num_points_selection, 2)
+                            ) + pad_pixel_position_xy
             )
             for segment_index, label in enumerate(segment_names):
                 if label in pixel_stacked:
@@ -230,7 +239,8 @@ class InferenceDatasetCalibration(torch.utils.data.Dataset):
                 & (px_projected_selection_shuffled[:, :, 1] < image_height_source)
             )
 
-            r[f"{segment_type}__is_keypoint_mask"] = is_keypoint_mask.unsqueeze(0)
+            r[f"{segment_type}__is_keypoint_mask"] = is_keypoint_mask.unsqueeze(
+                0)
 
             # reshape from (num_segments, num_points_selection, 2) to (3, num_segments, num_points_selection)
             px_projected_selection_shuffled = (
@@ -241,7 +251,8 @@ class InferenceDatasetCalibration(torch.utils.data.Dataset):
             px_projected_selection_shuffled = px_projected_selection_shuffled.view(
                 num_segments * num_points_selection, 3
             )
-            px_projected_selection_shuffled = px_projected_selection_shuffled.transpose(0, 1)
+            px_projected_selection_shuffled = px_projected_selection_shuffled.transpose(
+                0, 1)
             px_projected_selection_shuffled = px_projected_selection_shuffled.view(
                 3, num_segments, num_points_selection
             )
