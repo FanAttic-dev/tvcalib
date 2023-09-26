@@ -18,6 +18,10 @@ from tvcalib.cam_modules import SNProjectiveCamera
 from tvcalib.sncalib_dataset import split_circle_central
 
 
+def image_path2image_id(image_path):
+    return str(Path(*image_path.parts[5:]))
+
+
 def load_annotated_points(hparams, image_id, object3d):
 
     # load annotations from file
@@ -128,7 +132,7 @@ class InferenceDatasetSegmentation(torch.utils.data.Dataset):
         return {
             "image_raw": image_raw_resized,
             "image": image,
-            "image_id": str(Path(*self.image_files[idx].parts[5:]))
+            "image_id": image_path2image_id(self.image_files[idx])
         }
 
     def __len__(self):
