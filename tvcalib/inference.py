@@ -19,7 +19,7 @@ from tvcalib.sncalib_dataset import split_circle_central
 
 
 def image_path2image_id(image_path):
-    return str(Path(*image_path.parts[5:]))
+    return str(Path(*image_path.parts[-2:]))
 
 
 def load_annotated_points(hparams, image_id, object3d):
