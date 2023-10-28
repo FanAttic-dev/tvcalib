@@ -18,7 +18,7 @@ Arguments:
     "object3d": "SoccerPitchLineCircleSegments",
     "dataset": {
         "file_match_info": "data/datasets/sncalib-test/match_info.json",
-        "extremities_annotations": "data/segment_localization/np4_r4_md30/test",
+        "extremities_annotations": "assets/weights/segment_localization/np4_r4_md30/test",
         "extremities_prefix": "extremities_",
         "num_points_on_line_segments": 4,
         "num_points_on_circle_segments": 8,

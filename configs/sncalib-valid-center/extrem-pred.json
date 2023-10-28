@@ -6,7 +6,7 @@
     "dataset": {
         "file_match_info": "data/datasets/sncalib-valid/match_info_cam_gt.json",
         "filter_cam_type": "Main camera center",
-        "extremities_annotations": "data/segment_localization/np4_nc8_r4_md30/sncalib-valid",
+        "extremities_annotations": "assets/weights/segment_localization/np4_nc8_r4_md30/sncalib-valid",
         "extremities_prefix": "extremities_",
         "num_points_on_line_segments": 4,
         "num_points_on_circle_segments": 8,

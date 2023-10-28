@@ -21,8 +21,8 @@
 # Inference
 `inference.ipynb`: Given a bunch of images, semantic segmentation, point selection, estimation of camera parameters, and visualization is applied. The pretrained segmentation model can be downloaded here:
 ```bash
-mkdir data/segment_localization 
-wget https://tib.eu/cloud/s/x68XnTcZmsY4Jpg/download/train_59.pt -O data/segment_localization/train_59.pt
+mkdir assets/weights/segment_localization 
+wget https://tib.eu/cloud/s/x68XnTcZmsY4Jpg/download/train_59.pt -O assets/weights/segment_localization/train_59.pt
 ```
 
 # [Visualize Results](tvcalib/visualize_per_sample_output.ipynb)

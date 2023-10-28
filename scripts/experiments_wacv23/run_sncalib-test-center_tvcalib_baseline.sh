@@ -25,5 +25,5 @@ python scripts/baseline_homography_from_line_correspondences.py --extremities $D
 python -m evaluation.eval_projection --filter_gt_camera_type "Main camera center" --per_sample_output $SAVE_DIR/Hline-extrem-gt/per_sample_output.json --project_from Homography HDecomp --evaluate_2d --evaluate_3d --dir_dataset $DATASET_DIR --width $WIDTH --height $HEIGHT 
 
 # Retrained segmentation model with original point selection -> two points are enough
-python scripts/baseline_homography_from_line_correspondences.py --extremities data/segment_localization/np2_nc8_r4_md30/sncalib-test --output_dir $SAVE_DIR/Hline-extrem-pred --width $WIDTH --height $HEIGHT
+python scripts/baseline_homography_from_line_correspondences.py --extremities assets/weights/segment_localization/np2_nc8_r4_md30/sncalib-test --output_dir $SAVE_DIR/Hline-extrem-pred --width $WIDTH --height $HEIGHT
 python -m evaluation.eval_projection --filter_gt_camera_type "Main camera center" --per_sample_output $SAVE_DIR/Hline-extrem-pred/per_sample_output.json --project_from Homography HDecomp --evaluate_2d --evaluate_3d --dir_dataset $DATASET_DIR --width $WIDTH --height $HEIGHT

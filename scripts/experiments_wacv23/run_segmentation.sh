@@ -1,9 +1,9 @@
 #!/bin/zsh
 
-OUTPUT_DIR="data/segment_localization"
+OUTPUT_DIR="assets/weights/segment_localization"
 
 DATASET_PATH="data/datasets"
-CKPT="data/segment_localization/train_59.pt"
+CKPT="assets/weights/segment_localization/train_59.pt"
 num_points_circles=8
 
 

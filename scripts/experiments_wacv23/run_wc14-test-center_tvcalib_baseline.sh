@@ -27,5 +27,5 @@ python -m evaluation.eval_projection --per_sample_output $SAVE_DIR/$PREFIX/per_s
 
 # Retrained segmentation model with original point selection -> two points are enough
 PREFIX="Hline-extrem-pred"
-python scripts/baseline_homography_from_line_correspondences.py --extremities data/segment_localization/np2_nc8_r4_md30/wc14-test --output_dir $SAVE_DIR/$PREFIX --width $WIDTH --height $HEIGHT
+python scripts/baseline_homography_from_line_correspondences.py --extremities assets/weights/segment_localization/np2_nc8_r4_md30/wc14-test --output_dir $SAVE_DIR/$PREFIX --width $WIDTH --height $HEIGHT
 python -m evaluation.eval_projection --per_sample_output $SAVE_DIR/$PREFIX/per_sample_output.json --project_from Homography HDecomp --evaluate_2d --evaluate_3d --dir_dataset $DATASET_DIR --width $WIDTH --height $HEIGHT
